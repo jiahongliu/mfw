@@ -5,7 +5,15 @@ from . import models
 
 def index(request):
     travels=models.Travel.objects.all()
-    return render(request,'blog/index.html',{'travels':travels})
+    pindex=request.GET.get("pindex")#设置分页展示
+
+    pageinator=Paginator(travels, 20)
+    if pindex==""or pindex==None:
+        pindex=1
+    page=pageinator.page(pindex)
+
+    print(page.paginator.count)
+    return render(request,'blog/index.html',{'page':page})
 
 def article_page(request,article_id):
     acticle=models.objects.get(pk=article_id)
