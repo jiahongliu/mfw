@@ -30,7 +30,8 @@
 
 <div class="container">
     <div class="col-sm-12">
-        {% for travel in travels %}
+
+        {% for travel in page.object_list%}
         <div>
             <h2>{{ travel.id }}</h2>
             <div class="fakeimg">
@@ -55,6 +56,23 @@
             <br>
         </div>
         {% endfor %}
+
+        {% if page.has_previous %}
+            <a href="/blog/index/?pindex={{ page.previous_page_number }}">&lt;上一页</a>
+        {% endif %}
+
+        {% for pindex in page.paginator.page_range %}
+            {% if pindex == page.number %}
+                {{ pindex }}
+            {% else %}
+                <a href="/blog/index/?pindex={{ pindex }}">{{ pindex }}</a>
+            {% endif %}
+        {% endfor %}
+
+        {% if page.has_next %}
+            <a href="/blog/index/?pindex={{ page.next_page_number }}">&gt;下一页</a>
+        {% endif %}
     </div>
+
 </div>
 </body>
